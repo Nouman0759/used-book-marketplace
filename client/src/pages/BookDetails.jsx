@@ -5,47 +5,94 @@ import BidForm from "../components/BidForm";
 
 function BookDetails() {
   const { id } = useParams();
+
   const [book, setBook] = useState(null);
 
   const fetchBook = () => {
     axios
       .get(`http://localhost:5000/books/${id}`)
       .then((res) => setBook(res.data))
-      .catch((err) => console.error(err));
+      .catch(console.error);
   };
 
   useEffect(() => {
     fetchBook();
   }, [id]);
 
-  if (!book) return <h2>Loading...</h2>;
+  if (!book) return <h2 style={{ padding: "50px" }}>Loading...</h2>;
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>{book.title}</h1>
-      <h3>{book.author}</h3>
+    <div className="details">
 
-      <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-        {book.images.map((image) => (
+      <div className="details-grid">
+
+        <div>
+
           <img
-            key={image.id}
-            src={`http://localhost:5000/uploads/${image.imagePath}`}
-            alt="Book"
-            width="200"
+            className="main-image"
+            src={`http://localhost:5000/uploads/${book.images[0]?.imagePath}`}
+            alt={book.title}
           />
-        ))}
+
+          <div className="gallery">
+
+            {book.images.map((img) => (
+              <img
+                key={img.id}
+                src={`http://localhost:5000/uploads/${img.imagePath}`}
+                alt=""
+              />
+            ))}
+
+          </div>
+
+        </div>
+
+        <div className="info-card">
+
+          <h1>{book.title}</h1>
+
+          <h3>{book.author}</h3>
+
+          <hr />
+
+          <p>{book.description}</p>
+
+          <div className="price-box">
+
+            <div>
+
+              <small>Suggested Price</small>
+
+              <h2>Rs. {book.suggestedPrice}</h2>
+
+            </div>
+
+            <div>
+
+              <small>Highest Bid</small>
+
+              <h2>
+
+                {book.highestBid
+                  ? `Rs. ${book.highestBid}`
+                  : "No bids"}
+
+              </h2>
+
+            </div>
+
+          </div>
+
+          <BidForm
+            bookId={id}
+            onBidPlaced={fetchBook}
+          />
+
+        </div>
+
       </div>
 
-      <p>{book.description}</p>
-
-      <h3>Suggested Price: Rs. {book.suggestedPrice}</h3>
-
-      <h3>
-        Highest Bid:{" "}
-        {book.highestBid ? `Rs. ${book.highestBid}` : "No bids yet"}
-      </h3>
-
-      <BidForm bookId={id} onBidPlaced={fetchBook} />
     </div>
   );
 }

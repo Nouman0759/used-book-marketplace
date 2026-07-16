@@ -4,31 +4,36 @@ function BookCard({ book }) {
   return (
     <Link
       to={`/book/${book.id}`}
-      style={{ textDecoration: "none", color: "black" }}
+      style={{
+        textDecoration: "none",
+        color: "inherit",
+      }}
     >
-      <div
-        style={{
-          border: "1px solid #ddd",
-          borderRadius: "10px",
-          padding: "15px",
-        }}
-      >
-        {book.thumbnail && (
-          <img
-            src={`http://localhost:5000/uploads/${book.thumbnail}`}
-            alt={book.title}
-            style={{
-              width: "100%",
-              height: "200px",
-              objectFit: "cover",
-            }}
-          />
-        )}
+      <div className="card">
+       <img
+          src={
+            book.thumbnail
+              ? `http://localhost:5000/uploads/${book.thumbnail}`
+              : "https://placehold.co/400x600/E7DFC6/24312A?text=No+Image"
+        }
+  alt={book.title}
+/>
 
-        <h2>{book.title}</h2>
-        <p><strong>Author:</strong> {book.author}</p>
-        <p><strong>Price:</strong> Rs. {book.suggestedPrice}</p>
-        <p><strong>Bids:</strong> {book.bidCount}</p>
+        <div className="card-body">
+          <h2>{book.title}</h2>
+
+          <p>
+            <strong>Author:</strong> {book.author}
+          </p>
+
+          <p className="price">
+            Rs. {book.suggestedPrice}
+          </p>
+
+          <p className="bid">
+            {book.bidCount} Bid{book.bidCount !== 1 ? "s" : ""}
+          </p>
+        </div>
       </div>
     </Link>
   );

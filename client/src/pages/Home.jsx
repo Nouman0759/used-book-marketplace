@@ -4,6 +4,7 @@ import BookCard from "../components/BookCard";
 
 function Home() {
   const [books, setBooks] = useState([]);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     axios
@@ -12,22 +13,45 @@ function Home() {
       .catch((err) => console.error(err));
   }, []);
 
-  return (
-    <div style={{ padding: "20px" }}>
-      <h1>Used Book Marketplace</h1>
+  const filteredBooks = books.filter((book) => {
+    const search = query.toLowerCase();
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(250px,1fr))",
-          gap: "20px",
-        }}
-      >
-        {books.map((book) => (
-          <BookCard key={book.id} book={book} />
-        ))}
-      </div>
-    </div>
+    return (
+      book.title.toLowerCase().includes(search) ||
+      book.author.toLowerCase().includes(search)
+    );
+  });
+
+  return (
+    <>
+      <section className="hero">
+        <h1>
+          Every copy has a chapter of its own before it reaches you.
+        </h1>
+
+        <p>
+          Browse second-hand books uploaded by readers, discover hidden gems,
+          and place bids on your next favorite book.
+        </p>
+
+        <input
+          className="search"
+          placeholder="Search by title or author..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+      </section>
+
+      <section className="book-grid">
+        {filteredBooks.length > 0 ? (
+          filteredBooks.map((book) => (
+            <BookCard key={book.id} book={book} />
+          ))
+        ) : (
+          <h2>No books found.</h2>
+        )}
+      </section>
+    </>
   );
 }
 

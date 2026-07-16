@@ -2,22 +2,15 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
-    <nav
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        padding: "15px",
-        background: "#222",
-        color: "white",
-      }}
-    >
-      <Link to="/" style={{ color: "white" }}>
-        Used Books
-      </Link>
+    <nav className="navbar">
+      <div className="logo">
+        📚 Second<span>Chapter</span>
+      </div>
 
-      <Link to="/add" style={{ color: "white" }}>
-        Add Book
-      </Link>
+      <div className="nav-links">
+        <Link to="/">Browse</Link>
+        <Link to="/add">Sell a Book</Link>
+      </div>
     </nav>
   );
 }

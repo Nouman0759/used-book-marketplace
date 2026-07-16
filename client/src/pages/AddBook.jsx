@@ -25,7 +25,7 @@ function AddBook() {
     try {
       await axios.post("http://localhost:5000/books", formData);
 
-      alert("Book Added!");
+      alert("📚 Book added successfully!");
 
       setTitle("");
       setAuthor("");
@@ -34,60 +34,74 @@ function AddBook() {
       setImages([]);
     } catch (err) {
       console.error(err);
-      alert("Error adding book");
+      alert("Something went wrong.");
     }
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Add Book</h1>
+    <div className="add-page">
+      <div className="form-card">
 
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
+        <h1>Sell Your Book</h1>
 
-        <br /><br />
+        <p>
+          Give your well-loved book a new home.
+        </p>
 
-        <input
-          placeholder="Author"
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-        />
+        <form className="book-form" onSubmit={handleSubmit}>
 
-        <br /><br />
+          <label>Book Title</label>
+          <input
+            type="text"
+            placeholder="The Great Gatsby"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
 
-        <textarea
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
+          <label>Author</label>
+          <input
+            type="text"
+            placeholder="F. Scott Fitzgerald"
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
+            required
+          />
 
-        <br /><br />
+          <label>Description</label>
+          <textarea
+            rows="5"
+            placeholder="Describe the condition of your book..."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
 
-        <input
-          type="number"
-          placeholder="Suggested Price"
-          value={suggestedPrice}
-          onChange={(e) => setSuggestedPrice(e.target.value)}
-        />
+          <label>Suggested Price (Rs.)</label>
+          <input
+            type="number"
+            placeholder="1500"
+            value={suggestedPrice}
+            onChange={(e) => setSuggestedPrice(e.target.value)}
+            required
+          />
 
-        <br /><br />
+          <label>Upload up to 3 Images</label>
 
-        <input
-          type="file"
-          multiple
-          onChange={(e) => setImages(e.target.files)}
-        />
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={(e) => setImages(e.target.files)}
+          />
 
-        <br /><br />
+          <button type="submit">
+            Publish Listing
+          </button>
 
-        <button type="submit">
-          Add Book
-        </button>
-      </form>
+        </form>
+
+      </div>
     </div>
   );
 }
