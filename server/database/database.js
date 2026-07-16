@@ -1,5 +1,6 @@
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
+const fs = require("fs");
 
 const db = new sqlite3.Database(
   path.join(__dirname, "../database.sqlite"),
@@ -12,37 +13,15 @@ const db = new sqlite3.Database(
   }
 );
 
-// Create tables if they don't exist
+// Create tables from schema.sql if they don't exist
+const schema = fs.readFileSync(path.join(__dirname, "schema.sql"), "utf8");
+
 db.serialize(() => {
-  db.run(`
-    CREATE TABLE IF NOT EXISTS Book (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      title TEXT NOT NULL,
-      author TEXT NOT NULL,
-      description TEXT,
-      suggestedPrice REAL
-    )
-  `);
-
-  db.run(`
-    CREATE TABLE IF NOT EXISTS BookImage (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      bookId INTEGER,
-      imagePath TEXT,
-      FOREIGN KEY(bookId) REFERENCES Book(id)
-    )
-  `);
-
-  db.run(`
-    CREATE TABLE IF NOT EXISTS Bid (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      bookId INTEGER,
-      bidderName TEXT,
-      bidAmount REAL,
-      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY(bookId) REFERENCES Book(id)
-    )
-  `);
+  db.exec(schema, (err) => {
+    if (err) {
+      console.error("Failed to apply schema:", err.message);
+    }
+  });
 });
 
 module.exports = db;

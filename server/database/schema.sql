@@ -1,0 +1,26 @@
+-- SecondChapter — database schema
+-- SQLite
+
+CREATE TABLE IF NOT EXISTS Book (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT NOT NULL,
+  author TEXT NOT NULL,
+  description TEXT,
+  suggestedPrice REAL
+);
+
+CREATE TABLE IF NOT EXISTS BookImage (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  bookId INTEGER,
+  imagePath TEXT,
+  FOREIGN KEY (bookId) REFERENCES Book(id)
+);
+
+CREATE TABLE IF NOT EXISTS Bid (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  bookId INTEGER,
+  bidderName TEXT,
+  bidAmount REAL,
+  timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (bookId) REFERENCES Book(id)
+);

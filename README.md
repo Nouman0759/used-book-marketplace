@@ -5,6 +5,17 @@ A small full-stack app where readers list used books for sale and others place b
 - **Client:** React 19 (Vite), React Router, Axios
 - **Server:** Node.js, Express 5, SQLite3, Multer (image uploads)
 
+## Screenshots
+
+**Browse page**
+![Browse page](docs/screenshots/home.png)
+
+**Book details, with bid history**
+![Book details page](docs/screenshots/book-details.png)
+
+**Sell a book**
+![Sell a book page](docs/screenshots/add-book.png)
+
 ## Project structure
 
 ```
@@ -17,13 +28,18 @@ used-book-marketplace/
 │   │   └── main.jsx
 │   └── package.json
 │
+├── docs/
+│   └── screenshots/         Screenshots used in this README
+│
 ├── server/                  Express backend
 │   ├── database/
-│   │   └── database.js     SQLite connection + table setup
+│   │   ├── database.js      SQLite connection, applies schema.sql on startup
+│   │   ├── schema.sql       Table definitions (Book, BookImage, Bid)
+│   │   └── seed.js          Loads the sample dataset
 │   ├── routes/
 │   │   └── books.js        /books API routes
-│   ├── uploads/             Uploaded book images (created at runtime)
-│   ├── database.sqlite      SQLite database file
+│   ├── uploads/             Book images (includes 4 sample covers for seeding)
+│   ├── database.sqlite      SQLite database file (created on first run)
 │   ├── app.js                Server entry point
 │   └── package.json
 │
@@ -58,10 +74,18 @@ The client and server run as two separate processes — start each in its own te
 
 ```bash
 cd server
-node app.js
+npm run start
 ```
 
-The API runs at `http://localhost:5000`. On first run it automatically creates `database.sqlite` and the required tables if they don't already exist.
+The API runs at `http://localhost:5000`. On first run it automatically creates `database.sqlite` and applies `database/schema.sql` if the tables don't already exist.
+
+**Load the sample dataset (optional but recommended):**
+
+```bash
+npm run seed
+```
+
+This clears any existing rows and inserts 4 sample books — with cover images already included under `server/uploads/` — plus a few sample bids, so the app has something to look at right away. Safe to re-run any time; it doesn't touch the schema, only the data.
 
 **2. Start the client** (from `client/`):
 
@@ -83,3 +107,12 @@ The app opens at `http://localhost:5173`.
 | POST | `/books` | Create a new listing (multipart form: `title`, `author`, `description`, `suggestedPrice`, up to 3 `images`) |
 | POST | `/books/:id/bid` | Place a bid (`bidderName`, `bidAmount`) |
 
+## Known limitations
+
+- No authentication — anyone can list a book or place a bid under any name
+- No validation that a new bid exceeds the current highest bid
+- No listing edit/delete flow yet
+
+## License
+
+Add your license here.
