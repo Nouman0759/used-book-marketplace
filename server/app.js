@@ -1,12 +1,13 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const db = require("./database/database");
 const app = express();
 const bookRoutes = require("./routes/books");
 
 app.use(cors());
 app.use(express.json());
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/books", bookRoutes);
 
 app.get("/", (req, res) => {

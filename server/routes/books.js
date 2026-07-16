@@ -7,7 +7,7 @@ const db = require("../database/database");
 // Configure image storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/");
+    cb(null, path.join(__dirname, "../uploads"));
   },
   filename: function (req, file, cb) {
     const uniqueName = Date.now() + path.extname(file.originalname);
@@ -58,6 +58,7 @@ router.get("/", (req, res) => {
       Book.id,
       Book.title,
       Book.author,
+      Book.description,
       Book.suggestedPrice,
       (
         SELECT imagePath

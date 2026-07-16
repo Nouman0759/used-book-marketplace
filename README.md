@@ -107,12 +107,3 @@ The app opens at `http://localhost:5173`.
 | POST | `/books` | Create a new listing (multipart form: `title`, `author`, `description`, `suggestedPrice`, up to 3 `images`) |
 | POST | `/books/:id/bid` | Place a bid (`bidderName`, `bidAmount`) |
 
-## Known limitations
-
-- No authentication — anyone can list a book or place a bid under any name
-- No validation that a new bid exceeds the current highest bid
-- No listing edit/delete flow yet
-
-## License
-
-Add your license here.

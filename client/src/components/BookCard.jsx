@@ -25,6 +25,10 @@ function BookCard({ book }) {
           <h2>{book.title}</h2>
           <p>{book.author}</p>
 
+          {book.description && (
+            <p className="card-desc">{book.description}</p>
+          )}
+
           <div className="card-meta">
             <span>No. {String(book.id).padStart(3, "0")}</span>
 

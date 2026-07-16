@@ -7,11 +7,15 @@ function BookDetails() {
   const { id } = useParams();
 
   const [book, setBook] = useState(null);
+  const [activeImage, setActiveImage] = useState(null);
 
   const fetchBook = () => {
     axios
       .get(`http://localhost:5000/books/${id}`)
-      .then((res) => setBook(res.data))
+      .then((res) => {
+        setBook(res.data);
+        setActiveImage(res.data.images[0]?.imagePath ?? null);
+      })
       .catch(console.error);
   };
 
@@ -30,7 +34,7 @@ function BookDetails() {
 
           <img
             className="main-image"
-            src={`http://localhost:5000/uploads/${book.images[0]?.imagePath}`}
+            src={`http://localhost:5000/uploads/${activeImage}`}
             alt={book.title}
           />
 
@@ -41,6 +45,8 @@ function BookDetails() {
                 key={img.id}
                 src={`http://localhost:5000/uploads/${img.imagePath}`}
                 alt=""
+                onClick={() => setActiveImage(img.imagePath)}
+                className={img.imagePath === activeImage ? "active" : ""}
               />
             ))}
 
