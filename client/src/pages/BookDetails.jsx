@@ -26,7 +26,7 @@ function BookDetails() {
 
       <div className="details-grid">
 
-        <div>
+        <div className="image-pocket">
 
           <img
             className="main-image"
@@ -50,6 +50,8 @@ function BookDetails() {
 
         <div className="info-card">
 
+          <p className="catalog-no">No. {String(book.id).padStart(3, "0")} &middot; fiction</p>
+
           <h1>{book.title}</h1>
 
           <h3>{book.author}</h3>
@@ -61,27 +63,49 @@ function BookDetails() {
           <div className="price-box">
 
             <div>
-
-              <small>Suggested Price</small>
-
+              <small>Suggested price</small>
               <h2>Rs. {book.suggestedPrice}</h2>
-
             </div>
 
-            <div>
-
-              <small>Highest Bid</small>
-
+            <div className="highest">
+              <small>Highest bid</small>
               <h2>
-
-                {book.highestBid
-                  ? `Rs. ${book.highestBid}`
-                  : "No bids"}
-
+                {book.highestBid ? `Rs. ${book.highestBid}` : "\u2014"}
               </h2>
-
             </div>
 
+          </div>
+
+          <div className="ledger">
+            <div className="ledger-head">Date due &middot; bid record</div>
+
+            {book.bids.length > 0 ? (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Bidder</th>
+                    <th>Amount</th>
+                    <th>Placed</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {book.bids.map((bid, i) => (
+                    <tr key={bid.id} className={i === 0 ? "top" : ""}>
+                      <td>{bid.bidderName}</td>
+                      <td>Rs. {bid.bidAmount}</td>
+                      <td>
+                        {new Date(bid.timestamp).toLocaleDateString("en-GB", {
+                          day: "2-digit",
+                          month: "short",
+                        })}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p className="empty">No bids stamped yet &mdash; be the first.</p>
+            )}
           </div>
 
           <BidForm

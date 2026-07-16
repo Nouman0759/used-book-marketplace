@@ -25,6 +25,8 @@ function Home() {
   return (
     <>
       <section className="hero">
+        <span className="eyebrow label-mono">used · traded · rebound</span>
+
         <h1>
           Every copy has a chapter of its own before it reaches you.
         </h1>
@@ -34,12 +36,20 @@ function Home() {
           and place bids on your next favorite book.
         </p>
 
-        <input
-          className="search"
-          placeholder="Search by title or author..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
+        <div className="search-wrap">
+          <label className="label-mono">find a title or author</label>
+          <div className="search-row">
+            <input
+              className="search"
+              placeholder="The Great Gatsby, Fitzgerald..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            <button className="search-stamp" type="button">
+              search
+            </button>
+          </div>
+        </div>
       </section>
 
       <section className="book-grid">

@@ -25,7 +25,7 @@ function AddBook() {
     try {
       await axios.post("http://localhost:5000/books", formData);
 
-      alert("📚 Book added successfully!");
+      alert("Book filed successfully.");
 
       setTitle("");
       setAuthor("");
@@ -34,7 +34,7 @@ function AddBook() {
       setImages([]);
     } catch (err) {
       console.error(err);
-      alert("Something went wrong.");
+      alert("Something went wrong. Try again.");
     }
   };
 
@@ -42,7 +42,7 @@ function AddBook() {
     <div className="add-page">
       <div className="form-card">
 
-        <h1>Sell Your Book</h1>
+        <h1>Sell your book</h1>
 
         <p>
           Give your well-loved book a new home.
@@ -50,53 +50,62 @@ function AddBook() {
 
         <form className="book-form" onSubmit={handleSubmit}>
 
-          <label>Book Title</label>
-          <input
-            type="text"
-            placeholder="The Great Gatsby"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
+          <div>
+            <label>Book title</label>
+            <input
+              type="text"
+              placeholder="The Great Gatsby"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
+          </div>
 
-          <label>Author</label>
-          <input
-            type="text"
-            placeholder="F. Scott Fitzgerald"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            required
-          />
+          <div>
+            <label>Author</label>
+            <input
+              type="text"
+              placeholder="F. Scott Fitzgerald"
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
+              required
+            />
+          </div>
 
-          <label>Description</label>
-          <textarea
-            rows="5"
-            placeholder="Describe the condition of your book..."
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
+          <div>
+            <label>Condition notes</label>
+            <textarea
+              rows="4"
+              placeholder="Describe the condition of your book..."
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+          </div>
 
-          <label>Suggested Price (Rs.)</label>
-          <input
-            type="number"
-            placeholder="1500"
-            value={suggestedPrice}
-            onChange={(e) => setSuggestedPrice(e.target.value)}
-            required
-          />
+          <div>
+            <label>Suggested price (Rs.)</label>
+            <input
+              type="number"
+              placeholder="1500"
+              value={suggestedPrice}
+              onChange={(e) => setSuggestedPrice(e.target.value)}
+              required
+            />
+          </div>
 
-          <label>Upload up to 3 Images</label>
-
-          <input
-            type="file"
-            multiple
-            accept="image/*"
-            onChange={(e) => setImages(e.target.files)}
-          />
+          <div>
+            <label>Photos (up to 3)</label>
+            <input
+              type="file"
+              multiple
+              accept="image/*"
+              onChange={(e) => setImages(e.target.files)}
+            />
+          </div>
 
           <button type="submit">
-            Publish Listing
+            File this book
           </button>
 
         </form>

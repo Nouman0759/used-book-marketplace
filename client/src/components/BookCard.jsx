@@ -10,29 +10,32 @@ function BookCard({ book }) {
       }}
     >
       <div className="card">
-       <img
+        <div className="price-tag">Rs. {book.suggestedPrice}</div>
+
+        <img
           src={
             book.thumbnail
               ? `http://localhost:5000/uploads/${book.thumbnail}`
-              : "https://placehold.co/400x600/E7DFC6/24312A?text=No+Image"
-        }
-  alt={book.title}
-/>
+              : "https://placehold.co/400x600/EFEADC/6B6558?text=No+image"
+          }
+          alt={book.title}
+        />
 
         <div className="card-body">
           <h2>{book.title}</h2>
+          <p>{book.author}</p>
 
-          <p>
-            <strong>Author:</strong> {book.author}
-          </p>
+          <div className="card-meta">
+            <span>No. {String(book.id).padStart(3, "0")}</span>
 
-          <p className="price">
-            Rs. {book.suggestedPrice}
-          </p>
-
-          <p className="bid">
-            {book.bidCount} Bid{book.bidCount !== 1 ? "s" : ""}
-          </p>
+            {book.bidCount > 0 ? (
+              <span className="bid-stamp">
+                {book.bidCount} bid{book.bidCount !== 1 ? "s" : ""}
+              </span>
+            ) : (
+              <span>no bids yet</span>
+            )}
+          </div>
         </div>
       </div>
     </Link>

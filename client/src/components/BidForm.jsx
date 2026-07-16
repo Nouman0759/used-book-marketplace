@@ -14,45 +14,49 @@ function BidForm({ bookId, onBidPlaced }) {
         bidAmount,
       });
 
-      alert("🎉 Bid placed successfully!");
-
       setBidderName("");
       setBidAmount("");
 
       onBidPlaced();
     } catch (err) {
       console.error(err);
-      alert("Failed to place bid.");
+      alert("Couldn't place that bid. Try again.");
     }
   };
 
   return (
     <div className="bid-card">
-      <h2>Place Your Bid</h2>
+      <h2>Place your bid</h2>
 
       <p className="bid-subtitle">
         Submit your best offer for this book.
       </p>
 
       <form className="bid-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Your Name"
-          value={bidderName}
-          onChange={(e) => setBidderName(e.target.value)}
-          required
-        />
+        <div className="field">
+          <label>Your name</label>
+          <input
+            type="text"
+            placeholder="Jane Doe"
+            value={bidderName}
+            onChange={(e) => setBidderName(e.target.value)}
+            required
+          />
+        </div>
 
-        <input
-          type="number"
-          placeholder="Bid Amount (Rs.)"
-          value={bidAmount}
-          onChange={(e) => setBidAmount(e.target.value)}
-          required
-        />
+        <div className="field">
+          <label>Bid amount (Rs.)</label>
+          <input
+            type="number"
+            placeholder="1800"
+            value={bidAmount}
+            onChange={(e) => setBidAmount(e.target.value)}
+            required
+          />
+        </div>
 
         <button type="submit">
-          Place Bid
+          Place bid
         </button>
       </form>
     </div>
